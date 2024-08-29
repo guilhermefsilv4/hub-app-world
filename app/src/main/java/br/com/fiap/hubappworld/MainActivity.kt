@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import br.com.fiap.hubappworld.screens.HubScreen
+import br.com.fiap.hubappworld.screens.hub.HubScreen
 import br.com.fiap.hubappworld.ui.theme.HubAppWorldTheme
 
 class MainActivity : ComponentActivity() {
