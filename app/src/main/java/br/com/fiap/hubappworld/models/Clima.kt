@@ -64,6 +64,11 @@ data class Wind(
     val deg: Long
 )
 
+data class WeatherComplete (
+    val cod: String,
+    val list: List<ListElement>
+)
+
 data class ListElement (
     val dt: Long,
     val main: Main,
