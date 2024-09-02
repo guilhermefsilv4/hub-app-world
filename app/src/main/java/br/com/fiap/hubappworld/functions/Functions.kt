@@ -2,6 +2,8 @@ package br.com.fiap.hubappworld.functions
 
 import androidx.navigation.NavController
 import br.com.fiap.hubappworld.R
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 fun getWeatherDrawableResourceId(name: String): Int {
     return when (name) {
@@ -31,4 +33,14 @@ fun getWeatherDrawableResourceId(name: String): Int {
 
 fun navigate(navController: NavController, route: String) {
     navController.navigate(route)
+}
+
+fun formatarData(dataOriginal: String): String {
+    val formatoOriginal = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+
+    val novoFormato = SimpleDateFormat("dd/MM/yyyy HH'h'", Locale.getDefault())
+
+    val data = formatoOriginal.parse(dataOriginal)
+
+    return novoFormato.format(data)
 }

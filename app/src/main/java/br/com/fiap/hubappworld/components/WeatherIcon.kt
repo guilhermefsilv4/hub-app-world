@@ -9,7 +9,6 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun WeatherIcon(painterResource: Painter) {
-//    .align(Alignment.CenterHorizontally).size(200.dp),
     Image(
         modifier = Modifier.size(200.dp),
         painter = painterResource,

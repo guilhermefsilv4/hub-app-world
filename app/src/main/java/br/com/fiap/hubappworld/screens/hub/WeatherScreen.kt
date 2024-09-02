@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,6 +13,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -20,7 +23,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RenderEffect
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -28,6 +34,7 @@ import androidx.compose.ui.unit.sp
 import br.com.fiap.hubappworld.BuildConfig
 import br.com.fiap.hubappworld.components.WeatherIcon
 import br.com.fiap.hubappworld.components.WeatherText
+import br.com.fiap.hubappworld.functions.formatarData
 import br.com.fiap.hubappworld.functions.getWeatherDrawableResourceId
 import br.com.fiap.hubappworld.models.Clima
 import br.com.fiap.hubappworld.models.ListElement
@@ -105,7 +112,9 @@ fun WeatherScreen(currentLocation: LatLng) {
     })
 
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFFD4DCFF)),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -118,7 +127,8 @@ fun WeatherScreen(currentLocation: LatLng) {
             modifier = Modifier
                 .height(380.dp)
                 .fillMaxWidth()
-                .padding(32.dp)
+                .padding(32.dp),
+            colors = CardDefaults.cardColors(Color.White)
         ) {
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -140,13 +150,16 @@ fun WeatherScreen(currentLocation: LatLng) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 32.dp, end = 32.dp),
-            horizontalArrangement = Arrangement.Center
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             items(listWeather) {
                 Card(
                     modifier = Modifier
-                        .height(180.dp)
+                        .height(200.dp)
                         .padding(10.dp)
+                        .blur(radius = 16.dp),
+                    colors = CardDefaults.cardColors(Color.White)
                 ) {
                     Image(
                         modifier = Modifier.align(Alignment.CenterHorizontally),
@@ -154,8 +167,15 @@ fun WeatherScreen(currentLocation: LatLng) {
                         contentDescription = "Icone do tempo atual"
                     )
                     Text(
-                        text = it.dtTxt,
+                        text = "${it.main.temp} ºC",
                         modifier = Modifier.align(Alignment.CenterHorizontally),
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        text = formatarData(it.dtTxt),
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .padding(start = 10.dp, end = 10.dp),
                     )
                     Text(
                         text = it.weather.get(0).description,
