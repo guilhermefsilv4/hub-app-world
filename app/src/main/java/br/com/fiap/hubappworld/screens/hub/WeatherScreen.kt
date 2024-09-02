@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,8 +23,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RenderEffect
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -47,7 +43,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-private val API_KEY = BuildConfig.API_KEY
+private const val API_KEY = BuildConfig.API_KEY
 
 @Composable
 fun WeatherScreen(currentLocation: LatLng) {
@@ -163,7 +159,7 @@ fun WeatherScreen(currentLocation: LatLng) {
                 ) {
                     Image(
                         modifier = Modifier.align(Alignment.CenterHorizontally),
-                        painter = painterResource(id = getWeatherDrawableResourceId(it.weather.get(0).icon)),
+                        painter = painterResource(id = getWeatherDrawableResourceId(it.weather[0].icon)),
                         contentDescription = "Icone do tempo atual"
                     )
                     Text(
@@ -178,7 +174,7 @@ fun WeatherScreen(currentLocation: LatLng) {
                             .padding(start = 10.dp, end = 10.dp),
                     )
                     Text(
-                        text = it.weather.get(0).description,
+                        text = it.weather[0].description,
                         modifier = Modifier.align(Alignment.CenterHorizontally),
                     )
                 }

@@ -1,7 +1,6 @@
 package br.com.fiap.hubappworld.services
 
 import br.com.fiap.hubappworld.models.Clima
-import br.com.fiap.hubappworld.models.ListElement
 import br.com.fiap.hubappworld.models.WeatherComplete
 import retrofit2.Call
 import retrofit2.http.GET

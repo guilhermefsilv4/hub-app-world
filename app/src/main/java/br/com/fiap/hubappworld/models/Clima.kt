@@ -15,8 +15,7 @@ data class Clima(
     val id: Long,
     val name: String,
     val cod: Long
-) {
-}
+)
 
 data class Clouds(
     val all: Long

@@ -24,7 +24,7 @@ fun HubScreen(navController: NavController) {
             .background(Color(0xFFD4DCFF)),
         contentAlignment = Alignment.Center
     ) {
-        Column(verticalArrangement = Arrangement.spacedBy(-35.dp)) {
+        Column(verticalArrangement = Arrangement.spacedBy((-35).dp)) {
             CardHub(
                 painterResource(id = R.drawable.clima),
                 "Icone do clima",
