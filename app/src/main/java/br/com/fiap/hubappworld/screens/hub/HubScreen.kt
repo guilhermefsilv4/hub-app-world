@@ -25,8 +25,12 @@ fun HubScreen(navController: NavController) {
         contentAlignment = Alignment.Center
     ) {
         Column(verticalArrangement = Arrangement.spacedBy(-35.dp)) {
-            CardHub(painterResource(id = R.drawable.clima), "Icone do clima", handleClick = { navigate(navController, "clima") })
-            CardHub(painterResource(id = R.drawable.monetization_on_24), "Icone de dinheiro")
+            CardHub(
+                painterResource(id = R.drawable.clima),
+                "Icone do clima",
+                handleClick = { navigate(navController, "clima") }
+            )
+//            CardHub(painterResource(id = R.drawable.monetization_on_24), "Icone de dinheiro")
         }
     }
 }

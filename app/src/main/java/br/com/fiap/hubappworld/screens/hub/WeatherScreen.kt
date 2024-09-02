@@ -23,9 +23,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.fiap.hubappworld.BuildConfig
+import br.com.fiap.hubappworld.components.WeatherIcon
+import br.com.fiap.hubappworld.components.WeatherText
 import br.com.fiap.hubappworld.functions.getWeatherDrawableResourceId
 import br.com.fiap.hubappworld.models.Clima
-import br.com.fiap.hubappworld.models.ListElement
 import br.com.fiap.hubappworld.models.Main
 import br.com.fiap.hubappworld.models.Weather
 import br.com.fiap.hubappworld.services.RetrofitFactory
@@ -38,11 +39,11 @@ private val API_KEY = BuildConfig.API_KEY
 
 @Composable
 fun WeatherScreen(currentLocation: LatLng) {
-    var clima by remember { mutableStateOf<Clima?>(null) }
-    var climaMesmo by remember { mutableStateOf<Weather?>(null) }
+    var climaResponse by remember { mutableStateOf<Clima?>(null) }
+    var clima by remember { mutableStateOf<Weather?>(null) }
     var temperatura by remember { mutableStateOf<Main?>(null) }
 
-    var forecast by remember { mutableStateOf(listOf<ListElement>()) }
+//    var forecast by remember { mutableStateOf(listOf<ListElement>()) }
 
     val call = RetrofitFactory().getClimaService().getClima(
         currentLocation.latitude,
@@ -63,12 +64,12 @@ fun WeatherScreen(currentLocation: LatLng) {
     call.enqueue(object : Callback<Clima> {
         override fun onResponse(
             call: Call<Clima>,
-            response: Response<Clima>
+            response: Response<Clima>,
         ) {
-            clima = response.body()
-            if (clima != null) {
-                climaMesmo = clima!!.weather[0]
-                temperatura = clima!!.main
+            climaResponse = response.body()
+            if (climaResponse != null) {
+                clima = climaResponse!!.weather[0]
+                temperatura = climaResponse!!.main
             }
         }
 
@@ -113,30 +114,14 @@ fun WeatherScreen(currentLocation: LatLng) {
                 verticalArrangement = Arrangement.SpaceEvenly,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                if (climaMesmo != null) {
-                    Image(
-                        modifier = Modifier.align(Alignment.CenterHorizontally).size(200.dp),
-                        painter = painterResource(
-                            id = getWeatherDrawableResourceId(
-                                climaMesmo!!.icon
-                            )
-                        ),
-                        contentDescription = "icone da previsão do tempo"
-                    )
+                if (clima != null) {
+                    WeatherIcon(painterResource(id = getWeatherDrawableResourceId(clima!!.icon)))
                 }
-                climaMesmo?.let {
-                    Text(
-                        text = it.description,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 32.sp
-                    )
+                clima?.let {
+                    WeatherText(it.description)
                 }
                 temperatura?.let {
-                    Text(
-                        text = "${temperatura!!.temp} ºC",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 32.sp
-                    )
+                    WeatherText("${temperatura!!.temp} ºC")
                 }
             }
         }

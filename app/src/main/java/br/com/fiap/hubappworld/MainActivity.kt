@@ -1,5 +1,6 @@
 package br.com.fiap.hubappworld
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Build
@@ -14,10 +15,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,8 +41,8 @@ import com.google.android.gms.maps.model.LatLng
 class MainActivity : ComponentActivity() {
 
     private val permissions = arrayOf(
-        android.Manifest.permission.ACCESS_COARSE_LOCATION,
-        android.Manifest.permission.ACCESS_FINE_LOCATION
+        Manifest.permission.ACCESS_COARSE_LOCATION,
+        Manifest.permission.ACCESS_FINE_LOCATION
     )
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -115,14 +115,13 @@ class MainActivity : ComponentActivity() {
                             if (areGranted) {
                                 locationRequired = true
                                 startLocationUpdates()
-                                Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT)
-                                    .show()
+                                Toast.makeText(this, "Permissão concedida", Toast.LENGTH_SHORT).show()
                             } else {
-                                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this, "Permissão negada", Toast.LENGTH_SHORT).show()
                             }
                         }
 
-                        Button(onClick = {
+                        LaunchedEffect(Unit) {
                             if (permissions.all {
                                     ContextCompat.checkSelfPermission(
                                         this@MainActivity,
@@ -133,8 +132,6 @@ class MainActivity : ComponentActivity() {
                             } else {
                                 launcherMultiplePermissions.launch(permissions)
                             }
-                        }) {
-                            Text(text = "Clique")
                         }
 
                         val navController = rememberNavController()
